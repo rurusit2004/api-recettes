@@ -6,12 +6,16 @@ Toutes les recettes sont chargées une fois (une recherche par lettre de l'alpha
 
 ## Lancer le projet
 
+Prérequis : Node.js 18 ou plus récent (le code utilise le `fetch` natif de Node).
+
 ```bash
 npm install
 npm start
 ```
 
 Le serveur écoute sur http://localhost:3000. Aucune clé ni inscription : TheMealDB est libre d'accès.
+
+La première requête prend quelques secondes : l'API charge les 26 lettres de l'alphabet sur TheMealDB. Le résultat est gardé en cache en mémoire, donc toutes les requêtes suivantes sont instantanées. Le cache disparaît au redémarrage du serveur. Si TheMealDB est injoignable au premier chargement, les routes renvoient une erreur 500 propre (`{ "erreur": "Erreur du serveur" }`) et il suffit de relancer une requête pour retenter le chargement.
 
 ## Routes
 
@@ -60,6 +64,8 @@ api-recettes/
 
 TheMealDB renvoie chaque recette avec 40 champs à plat (`strIngredient1` à `strIngredient20`, `strMeasure1` à `strMeasure20`). Le service les rassemble :
 
+Exemple réel pour `GET /api/recettes/52772` :
+
 ```json
 {
   "id": "52772",
@@ -69,7 +75,14 @@ TheMealDB renvoie chaque recette avec 40 champs à plat (`strIngredient1` à `st
   "image": "https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg",
   "ingredients": [
     { "nom": "soy sauce", "quantite": "3/4 cup" },
-    { "nom": "water", "quantite": "1/2 cup" }
+    { "nom": "water", "quantite": "1/2 cup" },
+    { "nom": "brown sugar", "quantite": "1/4 cup" },
+    { "nom": "ground ginger", "quantite": "1/2 teaspoon" },
+    { "nom": "minced garlic", "quantite": "1/2 teaspoon" },
+    { "nom": "cornstarch", "quantite": "4 Tablespoons" },
+    { "nom": "chicken breasts", "quantite": "2" },
+    { "nom": "stir-fry vegetables", "quantite": "1 (12 oz.)" },
+    { "nom": "brown rice", "quantite": "3 cups" }
   ],
   "nbIngredients": 9
 }

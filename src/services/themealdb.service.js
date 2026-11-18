@@ -39,6 +39,9 @@ export async function chercherRecettes () {
   const toutes = []
   for (const lettre of LETTRES) {
     const response = await fetch(BASE + '/search.php?f=' + lettre)
+    if (!response.ok) {
+      throw new Error('TheMealDB ne repond pas (HTTP ' + response.status + ')')
+    }
     const donnees = await response.json()
     // meals vaut null quand la lettre ne renvoie rien : on teste avant de boucler
     if (donnees.meals) {
